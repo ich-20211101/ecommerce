@@ -3,6 +3,7 @@ target/
 *.class
 *.log
 logs/
+build/
 
 # ☕ Maven Wrapper
 !.mvn/wrapper/maven-wrapper.jar
@@ -12,6 +13,7 @@ logs/
 *.iml
 .vscode/
 .DS_Store
+.AppleDouble
 *.iws
 *.ipr
 .sts4-cache
@@ -21,8 +23,7 @@ logs/
 .factorypath
 .settings/
 
-# 📁 기타
-# (NetBeans 관련, 안 쓰면 삭제해도 됨)
+# 📁 기타 (NetBeans 관련 파일 무시, 사용 안하면 삭제 가능)
 nbproject/
 nbbuild/
 dist/
