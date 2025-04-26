@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { CartContext } from '../../contexts/CartContext';
+import { toast } from 'react-toastify';
 
 function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     fetch(`http://localhost:8080/api/products/${id}`)
@@ -14,6 +17,14 @@ function ProductDetail() {
       })
       .catch((err) => console.error('❌ Fetch Error:', err));
   }, [id]);
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    toast.success('🎉 Added to cart!', {
+      position: 'top-center',
+      autoClose: 1000,
+    });
+  };
 
   if (!product) {
     return (
@@ -34,12 +45,22 @@ function ProductDetail() {
     <h2 className="text-xl font-bold mb-2">{product.name}</h2>
     <p className="text-gray-700 text-sm mb-3">{product.description}</p>
     <p className="text-lg font-semibold">${(product.price / 100).toFixed(2)} CAD</p>
-    <Link
-        to="/"
-        className="inline-block mt-4 text-blue-500 hover:underline"
-    >
-        ⬅️ Back to list
-    </Link>
+
+    <button
+        onClick={handleAddToCart}
+        className="mt-4 text-blue-500 hover:underline bg-transparent border-none p-0 cursor-pointer"
+      >
+        🛒 Add to Cart
+    </button>
+
+    <div className="text-right">
+      <Link
+          to="/"
+          className="inline-block mt-4 text-blue-500 hover:underline"
+      >
+          ⬅️ Back to list
+      </Link>
+    </div>
     </div>
   );
 }

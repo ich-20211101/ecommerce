@@ -12,11 +12,11 @@ function Banner() {
       ></div>
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black opacity-50"></div>
+      <div className="absolute inset-0 bg-black opacity-55"></div>
 
       {/* Text */}
       <h1 className="relative text-4xl font-bold z-10">
-        Life is Short, Eat Dessert First 🧁
+        🍩 Life is Short, Eat Dessert First 🧁
       </h1>
     </div>
   );
