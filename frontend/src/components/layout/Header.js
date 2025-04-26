@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { CartContext } from '../../contexts/CartContext';
 
 function Header() {
+  const { cartQuantity } = useContext(CartContext);
+
   return (
     <header className="bg-white shadow-md">
       <div className="container mx-auto flex justify-between items-center p-4">
@@ -20,12 +23,13 @@ function Header() {
         </div>
 
         {/* 장바구니 + 로그인 버튼 */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 relative">
           <Link
             to="/cart"
-            className="px-4 py-2 text-pink-500 rounded hover:underline"
+            className="relative px-4 py-2 text-pink-500 rounded hover:underline"
           >
             Cart 🛍️
+            <span className="ml-1">({cartQuantity})</span>
           </Link>
           <Link
             to="/login"

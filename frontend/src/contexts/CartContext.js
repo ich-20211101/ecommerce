@@ -32,8 +32,11 @@ export function CartProvider({ children }) {
     setCartItems([]);
   };
 
+  // 장바구니 총 수량 계산
+  const cartQuantity = cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0);
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, cartQuantity }}>
       {children}
     </CartContext.Provider>
   );
