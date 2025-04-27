@@ -24,8 +24,14 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public List<Product> getProducts(@RequestParam(required = false) String search) {
+
+        if (search != null && !search.isEmpty()) {
+            return productService.searchProductsByName(search);
+        } else {
+            return productService.getAllProducts();
+        }
+
     }
 
     @GetMapping("/{id}")
