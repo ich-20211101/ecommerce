@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../../contexts/CartContext';
 
-function Header() {
+function Header({ searchTerm, setSearchTerm }) {
   const { cartQuantity } = useContext(CartContext);
 
   return (
@@ -18,6 +18,8 @@ function Header() {
           <input
             type="text"
             placeholder="Search desserts..."
+            value={searchTerm}                 // ✅ 입력값 연결
+            onChange={(e) => setSearchTerm(e.target.value)} // ✅ 입력할 때 업데이트
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300"
           />
         </div>

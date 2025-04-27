@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Header from './components/layout/Header';
@@ -15,12 +15,14 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+  const [searchTerm, setSearchTerm] = useState('');
+
   return (
     <BrowserRouter>
     <CartProvider>
       <div className="min-h-screen bg-gray-100">
       <ToastContainer />
-        <Header />
+        <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
         <main className="flex-grow">
         <Routes>
@@ -29,7 +31,7 @@ function App() {
               element={
                 <>
                   <Banner />
-                  <ProductList />
+                  <ProductList searchTerm={searchTerm} />
                 </>
               }
             />
