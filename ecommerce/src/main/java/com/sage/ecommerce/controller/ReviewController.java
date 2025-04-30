@@ -1,6 +1,7 @@
 package com.sage.ecommerce.controller;
 
 import com.sage.ecommerce.domain.Review;
+import com.sage.ecommerce.dto.ReviewDTO;
 import com.sage.ecommerce.service.ReviewService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,9 @@ public class ReviewController {
     }
 
     @GetMapping("/product/{productId}/reviews")
-    public List<Review> getReviewsByProduct(@PathVariable Long productId) {
-        return reviewService.getReviewsByProductId(productId);
+    public ResponseEntity<List<ReviewDTO>> getReviewsByProduct(@PathVariable Long productId) {
+        List<ReviewDTO> reviewDTOList = reviewService.getReviewsByProductId(productId);
+        return ResponseEntity.ok(reviewDTOList);
     }
 
     @PostMapping("/product/{productId}/reviews")

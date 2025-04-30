@@ -1,6 +1,8 @@
 package com.sage.ecommerce.controller;
 
 import com.sage.ecommerce.domain.Product;
+import com.sage.ecommerce.dto.ProductDetailDTO;
+import com.sage.ecommerce.dto.ProductListDTO;
 import com.sage.ecommerce.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,21 +30,15 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getProducts(@RequestParam(required = false) String search) {
-
-        if (search != null && !search.isEmpty()) {
-            return productService.searchProductsByName(search);
-        } else {
-            return productService.getAllProducts();
-        }
-
+    public ResponseEntity<List<ProductListDTO>> getAllProducts() {
+        List<ProductListDTO> products = productService.getAllProductDTOs();
+        return ResponseEntity.ok(products);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        Optional<Product> product = productService.getProductById(id);
-        return product.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ProductDetailDTO> getProductById(@PathVariable Long id) {
+        ProductDetailDTO product = productService.getProductDTOById(id);
+        return product != null ? ResponseEntity.ok(product) : ResponseEntity.notFound().build();
     }
 
 }

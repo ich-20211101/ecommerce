@@ -2,6 +2,7 @@ package com.sage.ecommerce.service;
 
 import com.sage.ecommerce.domain.Product;
 import com.sage.ecommerce.domain.Review;
+import com.sage.ecommerce.dto.ReviewDTO;
 import com.sage.ecommerce.repository.ProductRepository;
 import com.sage.ecommerce.repository.ReviewRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -22,8 +24,18 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getReviewsByProductId(Long productId) {
-        return reviewRepository.findByProductId(productId);
+    public List<ReviewDTO> getReviewsByProductId(Long productId) {
+        return reviewRepository.findByProductId(productId).stream().map(review -> {
+
+            return new ReviewDTO(
+                    review.getId(),
+                    review.getUsername(),
+                    review.getContent(),
+                    review.getRating(),
+                    review.getCreatedAt()
+            );
+
+        }).collect(Collectors.toList());
     }
 
     @Override
