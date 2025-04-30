@@ -5,31 +5,31 @@ function ProductList({ searchTerm }) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/products')
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchProducts = async () => {
+      try {
+        const query = searchTerm ? `?search=${encodeURIComponent(searchTerm)}` : '';
+        const res = await fetch(`http://localhost:8080/api/products${query}`);
+        const data = await res.json();
         console.log('📦 API Response:', data);
         setProducts(data);
-      })
-      .catch((err) => console.error('❌ Fetch Error:', err));
-  }, []);
+      } catch (err) {
+        console.error('❌ Fetch Error:', err);
+      }
+    };
 
-  // ✅ 검색어로 필터링
-  const filteredProducts = products.filter(product =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+    fetchProducts();
+  }, [searchTerm]);
 
   return (
     <div className="p-4">
-      {filteredProducts.length === 0 ? (
+      {products.length === 0 ? (
         <div className="text-center py-20">
           <h2 className="text-2xl font-bold mb-4">😢 No desserts found!</h2>
           <p className="text-gray-500">Try searching for something else.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {filteredProducts.map(product => (
+          {products.map(product => (
             <Link
               to={`/products/${product.id}`}
               key={product.id}

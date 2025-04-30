@@ -9,7 +9,11 @@ function Header({ searchTerm, setSearchTerm }) {
     <header className="bg-white shadow-md">
       <div className="container mx-auto flex justify-between items-center p-4">
         {/* 로고 */}
-        <Link to="/" className="text-2xl font-bold text-pink-500">
+        <Link
+          to="/"
+          onClick={() => setSearchTerm('')}  // ✅ 검색어 초기화
+          className="text-2xl font-bold text-pink-500"
+          >
           🍰 SweetShop
         </Link>
 
