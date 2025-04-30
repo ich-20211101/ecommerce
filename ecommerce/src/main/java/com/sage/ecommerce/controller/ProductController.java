@@ -2,9 +2,11 @@ package com.sage.ecommerce.controller;
 
 import com.sage.ecommerce.domain.Product;
 import com.sage.ecommerce.service.ProductService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +21,10 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product createProduct(@RequestBody Product product) {
-        return productService.saveProduct(product);
+    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+        Product savedProduct = productService.saveProduct(product);
+        URI location = URI.create("/api/products/" + savedProduct.getId());
+        return ResponseEntity.created(location).body(savedProduct);
     }
 
     @GetMapping
