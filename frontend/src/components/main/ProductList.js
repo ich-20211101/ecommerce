@@ -35,10 +35,31 @@ function ProductList({ searchTerm }) {
               key={product.id}
               className="p-4 border rounded hover:shadow-lg bg-white transition-all duration-200"
             >
-              <img src={product.imageUrl} alt={product.name} className="w-full h-48 object-cover mb-2 rounded" />
-              <h2 className="text-lg font-bold">{product.name}</h2>
-              <p>{product.description}</p>
-              <p>${(product.price / 100).toFixed(2)} CAD</p>
+              <img
+                src={product.imageUrl}
+                alt={product.name}
+                className="w-full h-48 object-cover mb-2 rounded"
+              />
+              <h2 className="text-lg font-bold mb-1">{product.name}</h2>
+  
+              {/* 🏷️ 태그 배지 */}
+              {product.tags && product.tags.length > 0 && (
+                <div className="mb-2">
+                  {product.tags.map(tag => (
+                    <span
+                      key={tag}
+                      className="inline-block text-xs bg-pink-100 text-pink-600 font-semibold mr-2 px-2.5 py-0.5 rounded"
+                    >
+                      {tag === 'NEW' ? '🆕 New' : tag === 'BEST' ? '🔥 Best' : tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+  
+              <p className="text-gray-700 text-sm mb-1">{product.description}</p>
+              <p className="text-pink-500 font-semibold">
+                ${(product.price / 100).toFixed(2)} CAD
+              </p>
             </Link>
           ))}
         </div>

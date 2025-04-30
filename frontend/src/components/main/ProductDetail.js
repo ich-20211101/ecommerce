@@ -37,30 +37,46 @@ function ProductDetail() {
 
   return (
     <div className="max-w-sm mx-auto p-4 bg-white rounded shadow-md mt-10">
-    <img
+      <img
         src={product.imageUrl}
         alt={product.name}
         className="w-full aspect-square object-cover mb-3 rounded"
-    />
-    <h2 className="text-xl font-bold mb-2">{product.name}</h2>
-    <p className="text-gray-700 text-sm mb-3">{product.description}</p>
-    <p className="text-lg font-semibold">${(product.price / 100).toFixed(2)} CAD</p>
-
-    <button
+      />
+  
+      <h2 className="text-xl font-bold mb-1">{product.name}</h2>
+  
+      {/* 🏷️ 태그 배지 */}
+      {product.tags && product.tags.length > 0 && (
+        <div className="mb-2">
+          {product.tags.map(tag => (
+            <span
+              key={tag}
+              className="inline-block text-xs bg-pink-100 text-pink-600 font-semibold mr-2 px-2.5 py-0.5 rounded"
+            >
+              {tag === 'NEW' ? '🆕 New' : tag === 'BEST' ? '🔥 Best' : tag}
+            </span>
+          ))}
+        </div>
+      )}
+  
+      <p className="text-gray-700 text-sm mb-3">{product.description}</p>
+      <p className="text-lg font-semibold">${(product.price / 100).toFixed(2)} CAD</p>
+  
+      <button
         onClick={handleAddToCart}
         className="mt-4 text-blue-500 hover:underline bg-transparent border-none p-0 cursor-pointer"
       >
         🛒 Add to Cart
-    </button>
-
-    <div className="text-right">
-      <Link
+      </button>
+  
+      <div className="text-right">
+        <Link
           to="/"
           className="inline-block mt-4 text-blue-500 hover:underline"
-      >
+        >
           ⬅️ Back to list
-      </Link>
-    </div>
+        </Link>
+      </div>
     </div>
   );
 }
