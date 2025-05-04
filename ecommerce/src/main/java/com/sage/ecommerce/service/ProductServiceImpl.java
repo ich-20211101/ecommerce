@@ -5,21 +5,17 @@ import com.sage.ecommerce.dto.ProductDetailDTO;
 import com.sage.ecommerce.dto.ProductListDTO;
 import com.sage.ecommerce.dto.ReviewDTO;
 import com.sage.ecommerce.repository.ProductRepository;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-
-    public ProductServiceImpl(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
 
     @Override
     public Product saveProduct(Product product) {

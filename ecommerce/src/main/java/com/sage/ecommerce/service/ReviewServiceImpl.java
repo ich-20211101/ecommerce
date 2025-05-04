@@ -7,6 +7,7 @@ import com.sage.ecommerce.form.ReviewForm;
 import com.sage.ecommerce.repository.ProductRepository;
 import com.sage.ecommerce.repository.ReviewRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,15 +15,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final ProductRepository productRepository;
-
-    public ReviewServiceImpl(ReviewRepository reviewRepository, ProductRepository productRepository) {
-        this.reviewRepository = reviewRepository;
-        this.productRepository = productRepository;
-    }
 
     @Override
     public List<ReviewDTO> getReviewsByProductId(Long productId) {

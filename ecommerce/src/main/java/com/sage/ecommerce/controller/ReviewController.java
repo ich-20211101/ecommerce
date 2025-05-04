@@ -4,6 +4,7 @@ import com.sage.ecommerce.domain.Review;
 import com.sage.ecommerce.dto.ReviewDTO;
 import com.sage.ecommerce.form.ReviewForm;
 import com.sage.ecommerce.service.ReviewService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class ReviewController {
 
     private final ReviewService reviewService;
-
-    public ReviewController(ReviewService reviewService) {
-        this.reviewService = reviewService;
-    }
 
     @GetMapping("/product/{productId}/reviews")
     public ResponseEntity<List<ReviewDTO>> getReviewsByProduct(@PathVariable Long productId) {
