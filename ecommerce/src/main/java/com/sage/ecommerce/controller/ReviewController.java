@@ -2,7 +2,9 @@ package com.sage.ecommerce.controller;
 
 import com.sage.ecommerce.domain.Review;
 import com.sage.ecommerce.dto.ReviewDTO;
+import com.sage.ecommerce.form.ReviewForm;
 import com.sage.ecommerce.service.ReviewService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,16 +28,15 @@ public class ReviewController {
     }
 
     @PostMapping("/product/{productId}/reviews")
-    public ResponseEntity<Review> createReview(@PathVariable Long productId, @RequestBody Review review) {
-        Review savedReview = reviewService.createReview(productId, review);
-        URI location = URI.create("/api/products/" + productId + "/reviews/" + savedReview.getId());
-        return ResponseEntity.created(location).body(savedReview);
+    public ResponseEntity<ReviewDTO> createReview(@PathVariable Long productId, @RequestBody ReviewForm reviewForm) {
+        ReviewDTO reviewDTO = reviewService.createReview(productId, reviewForm);
+        return ResponseEntity.status(HttpStatus.CREATED).body(reviewDTO);
     }
 
     @PutMapping("/reviews/{reviewId}")
-    public ResponseEntity<Review> updateReview(@PathVariable Long reviewId, @RequestBody Review updatedReview) {
-        Review result = reviewService.updateReview(reviewId, updatedReview);
-        return ResponseEntity.ok().body(result);
+    public ResponseEntity<ReviewDTO> updateReview(@PathVariable Long reviewId, @RequestBody ReviewForm reviewForm) {
+        ReviewDTO reviewDTO = reviewService.updateReview(reviewId, reviewForm);
+        return ResponseEntity.ok(reviewDTO);
     }
 
     @DeleteMapping("/reviews/{reviewId}")

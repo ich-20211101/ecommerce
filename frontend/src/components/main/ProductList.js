@@ -60,6 +60,14 @@ function ProductList({ searchTerm }) {
               <p className="text-pink-500 font-semibold">
                 ${(product.price / 100).toFixed(2)} CAD
               </p>
+
+              {/* 📝 리뷰 개수 표시 */}
+              {typeof product.reviewCount === 'number' && product.reviewCount > 0 && (
+                <p className="text-sm text-gray-500 mb-1">
+                  📝 {product.reviewCount} review{product.reviewCount !== 1 && 's'}
+                </p>
+              )}
+
             </Link>
           ))}
         </div>

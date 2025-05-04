@@ -3,6 +3,7 @@ package com.sage.ecommerce.service;
 import com.sage.ecommerce.domain.Product;
 import com.sage.ecommerce.domain.Review;
 import com.sage.ecommerce.dto.ReviewDTO;
+import com.sage.ecommerce.form.ReviewForm;
 import com.sage.ecommerce.repository.ProductRepository;
 import com.sage.ecommerce.repository.ReviewRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -39,25 +40,37 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Review createReview(Long productId, Review review) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid product ID"));
+    public ReviewDTO createReview(Long productId, ReviewForm reviewForm) {
 
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+
+        Review review = new Review();
+        review.setUsername(reviewForm.getUsername());
+        review.setContent(reviewForm.getContent());
+        review.setRating(reviewForm.getRating());
+        review.setCreatedAt(LocalDateTime.now());
         review.setProduct(product);
 
-        return reviewRepository.save(review);
+        Review savedReview = reviewRepository.save(review);
+
+        return new ReviewDTO(savedReview);
     }
 
     @Override
-    public Review updateReview(Long reviewId, Review updatedReview) {
+    public ReviewDTO updateReview(Long reviewId, ReviewForm reviewForm) {
         Review existingReview = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new EntityNotFoundException("Review not found"));
 
-        existingReview.setContent(updatedReview.getContent());
-        existingReview.setRating(updatedReview.getRating());
+        existingReview.setUsername(reviewForm.getUsername());
+        existingReview.setContent(reviewForm.getContent());
+        existingReview.setRating(reviewForm.getRating());
         existingReview.setUpdatedAt(LocalDateTime.now());
 
-        return reviewRepository.save(existingReview);
+        Review updatedReview = reviewRepository.save(existingReview);
+
+        return  new ReviewDTO(updatedReview);
+
     }
 
     @Override
