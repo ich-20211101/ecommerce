@@ -1,3 +1,4 @@
+/*
 package com.sage.ecommerce.config;
 
 import org.springframework.context.annotation.Bean;
@@ -25,3 +26,4 @@ public class CorsConfig {
     }
 
 }
+*/
